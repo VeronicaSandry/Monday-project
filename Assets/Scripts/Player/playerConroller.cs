@@ -12,6 +12,7 @@ public class playerConroller : MonoBehaviour
     public Transform groundCheck; 
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,11 +26,19 @@ public class playerConroller : MonoBehaviour
         if (Input.GetAxis("Horizontal") == 0 && isGround) 
         {
             animator.SetInteger("State", 1);
-        }
+        } 
+
+        else {
+            Flip(); 
+            if (isGround) {
+                animator.SetInteger("State",2);
+            }
+        } 
         Flip(); 
         if (Input.GetKeyDown(KeyCode.Space) && isGround) 
         {
         rb.AddForce(transform.up * jumpHeight, ForceMode2D.Impulse);
+        
         } 
         GroundCheck();
     } 
@@ -57,6 +66,10 @@ public class playerConroller : MonoBehaviour
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, 0.2f);
         isGround = colliders.Length > 1;
+        if (isGround) 
+        {
+            animator.SetInteger("State",3);
+        }
     } 
 
 }
